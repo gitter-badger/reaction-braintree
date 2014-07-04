@@ -26,7 +26,7 @@ Package.on_use(function (api, where) {
   ], ["client"]);
   
   api.export([
-    "StripePackageSchema",
+    "BraintreePackageSchema",
   ], ["client", "server"]);
   
 });
