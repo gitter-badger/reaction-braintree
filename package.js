@@ -2,7 +2,7 @@ Package.describe({
   summary: "Reaction Braintree - Braintree Payment Module for Reaction commerce"
 });
 
-Npm.depends({'stripe': '2.7.3'});
+Npm.depends({'braintree': '1.14.1'});
 
 Package.on_use(function (api, where) {
   api.use([
