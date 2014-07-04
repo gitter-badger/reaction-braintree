@@ -1,10 +1,10 @@
 <template name="stripe">
 <div class="row">
-  <h2>Stripe<small> Settings</small></h2>
+  <h2>Braintree<small> Settings</small></h2>
 </div>
 <div class="row">
   <div class="col-md-6 well">
-    {{#autoForm collection="Packages" schema="StripePackageSchema" doc=packageData type="update" id="stripe-update-form"}}
+    {{#autoForm collection="Packages" schema="BraintreePackageSchema" doc=packageData type="update" id="braintree-update-form"}}
       <div class="form-group">
       	Don't have a Stripe API key? <a href="https://dashboard.stripe.com/account/apikeys" target="_blank">Get it here.</a> (Need to sign in)
       </div>
