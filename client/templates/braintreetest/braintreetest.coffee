@@ -67,7 +67,7 @@ AutoForm.addHooks "braintree-payment-form",
     braintreeSubmitCallback = () ->
       #callback
 
-    Meteor.call "braintreeSubmit", cardData, amount, stripeSubmitCallback
+    Meteor.call "braintreeSubmit", cardData, amount, braintreeSubmitCallback
 
   beginSubmit: (formId, template) ->
     # Show Processing

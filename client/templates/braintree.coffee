@@ -1,5 +1,12 @@
-Template.braintree.message = ->
-  "This is Braintree Payments for Reaction Commerce!"
+Template.braintree.helpers
+  packageData: ->
+    return Packages.findOne({name:"reaction-braintree"})
 
-Template.braintree.description = ->
-  "braintree payments wrapped for reaction commerce"
+AutoForm.hooks "braintree-update-form":
+  onSuccess: (operation, result, template) ->
+    Alerts.removeSeen()
+    Alerts.add "Braintree settings saved.", "success"
+
+  onError: (operation, error, template) ->
+    Alerts.removeSeen()
+    Alerts.add "Braintree settings update failed. " + error, "danger"

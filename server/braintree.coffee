@@ -1,5 +1,3 @@
-
-###
 Braintree = Npm.require('braintree')
 Fiber = Npm.require("fibers")
 Future = Npm.require("fibers/future")
@@ -15,7 +13,7 @@ gateway = Braintree.connect(
 Meteor.methods
 
   braintreeSubmit: (cardData, amount) ->
-    
+    console.log "hello?"
     fut = new Future()
     @unblock()
     
@@ -36,4 +34,3 @@ Meteor.methods
    
       
     fut.wait()
-###
