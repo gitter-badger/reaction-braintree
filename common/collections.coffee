@@ -51,9 +51,9 @@ Meteor.startup ->
     Shops.find().forEach (shop) ->
       unless Meteor.settings.braintree
         Meteor.settings.braintree =
-          mode: false
-          client_id: ""
-          client_secret: ""
+          merchant_id: ""
+          public_key: ""
+          private_key: ""
 
       Packages.insert
         shopId: shop._id

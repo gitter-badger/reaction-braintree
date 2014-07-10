@@ -1,7 +1,8 @@
+
+###
 Braintree = Npm.require('braintree')
 Fiber = Npm.require("fibers")
 Future = Npm.require("fibers/future")
-
 settings = Packages.findOne(name: "reaction-braintree").settings
 
 gateway = Braintree.connect(
@@ -35,3 +36,4 @@ Meteor.methods
    
       
     fut.wait()
+###
