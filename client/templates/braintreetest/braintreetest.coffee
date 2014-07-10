@@ -9,21 +9,8 @@ paymentAlert = (errorMessage) ->
 hidePaymentAlert = () ->
   $(".alert").addClass("hidden").text('')
 
-handlePaypalSubmitError = (error) ->
-  # Depending on what they are, errors come back from PayPal in various formats
-  singleError = error?.response?.error_description
-  serverError = error?.response?.message
-  errors = error?.response?.details || []
-  if singleError
-    paymentAlert("Oops! " + singleError)
-  else if errors.length
-    for error in errors
-      formattedError = "Oops! " + error.issue + ": " + error.field.split(/[. ]+/).pop().replace(/_/g,' ')
-      paymentAlert(formattedError)
-  else if serverError
-    paymentAlert("Oops! " + serverError)
 
-Template.stripetest.helpers
+Template.braintreetest.helpers
   monthOptions: () ->
     monthOptions =
       [
@@ -54,7 +41,7 @@ Template.stripetest.helpers
 # used to track asynchronous submitting for UI changes
 submitting = false
 
-AutoForm.addHooks "stripe-payment-form",
+AutoForm.addHooks "braintree-payment-form",
   onSubmit: (doc) ->
     # Process form (pre-validated by autoform)
     submitting = true
@@ -65,25 +52,22 @@ AutoForm.addHooks "stripe-payment-form",
     cardData = {
       name: doc.payerName
       number: doc.cardNumber
-      exp_month: doc.expireMonth
-      exp_year: doc.expireYear
-      cvc: doc.cvv
+      expirationMonth: doc.expireMonth
+      expirationYear: doc.expireYear
+      cvv: doc.cvv
     }
 
-    paymentData = {
-      amount: 100
-      currency: "usd"
-    }
 
+    amount = "5.00"
     
     # Order Layout
     $(".list-group a").css("text-decoration", "none")
     $(".list-group-item").removeClass("list-group-item")
     
-    stripeSubmitCallback = () ->
+    braintreeSubmitCallback = () ->
       #callback
 
-    Meteor.call "stripeSubmit", cardData, paymentData, stripeSubmitCallback
+    Meteor.call "braintreeSubmit", cardData, amount, stripeSubmitCallback
 
   beginSubmit: (formId, template) ->
     # Show Processing
