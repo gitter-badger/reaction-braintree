@@ -1,4 +1,4 @@
-<template name="stripe">
+<template name="braintree">
 <div class="row">
   <h2>Braintree<small> Settings</small></h2>
 </div>
@@ -6,9 +6,11 @@
   <div class="col-md-6 well">
     {{#autoForm collection="Packages" schema="BraintreePackageSchema" doc=packageData type="update" id="braintree-update-form"}}
       <div class="form-group">
-      	Don't have a Stripe API key? <a href="https://dashboard.stripe.com/account/apikeys" target="_blank">Get it here.</a> (Need to sign in)
+      	Don't have a Braintree client ID and secret? <a href="https://developer.paypal.com/webapps/developer/applications" target="_blank">Get them here.</a>
       </div>
-      {{>afQuickField name='settings.api_key'}}
+      {{>afQuickField name='settings.merchant_id'}}
+      {{>afQuickField name='settings.public_key'}}
+      {{>afQuickField name='settings.private_key'}}
       <button type="submit" class="btn btn-primary pull-right">Update</button>
     {{/autoForm}}
   </div>
