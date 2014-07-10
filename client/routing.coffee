@@ -5,3 +5,10 @@ Router.map ->
     template: 'braintree'
     waitOn: ->
       PackagesHandle
+  
+  @route 'braintreetest',
+    controller: ShopAdminController
+    path: 'braintreetest',
+    template: 'braintreetest'
+    waitOn: ->
+      PackagesHandle
