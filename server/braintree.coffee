@@ -2,11 +2,13 @@ Braintree = Npm.require('braintree')
 Fiber = Npm.require("fibers")
 Future = Npm.require("fibers/future")
 
+settings = Packages.findOne(name: "reaction-braintree").settings
+
 gateway = Braintree.connect(
   environment: Braintree.Environment.Sandbox
-  merchantId: "your_merchant_id"
-  publicKey: "your_public_key"
-  privateKey: "your_private_key"
+  merchantId: settings.merchant_id
+  publicKey: settings.public_key
+  privateKey: settings.private_key
 )
 
 Meteor.methods

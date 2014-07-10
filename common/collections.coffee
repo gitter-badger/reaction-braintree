@@ -1,17 +1,17 @@
 @BraintreePackageSchema = new SimpleSchema([
   PackageConfigSchema
   {
-    "settings.mode":
-      type: Boolean
-      defaultValue: false
-    "settings.client_id":
+    "settings.merchant_id":
       type: String
-      label: "API Client ID"
-      min: 60
-    "settings.client_secret":
+      label: "Merchant ID"
+  
+    "settings.public_key":
       type: String
-      label: "API Secret"
-      min: 60
+      label: "Public Key"
+  
+    "settings.private_key":
+      type: String
+      label: "Private Key"
   }
 ])
 BraintreePackageSchema = @BraintreePackageSchema
