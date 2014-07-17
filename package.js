@@ -24,8 +24,8 @@ Package.on_use(function (api, where) {
 
     "client/templates/braintree.html",
     "client/templates/braintree.coffee",
-    "client/templates/braintreetest/braintreetest.html",
-    "client/templates/braintreetest/braintreetest.coffee"
+    "client/templates/braintreePaymentForm/braintreePaymentForm.html",
+    "client/templates/braintreePaymentForm/braintreePaymentForm.coffee"
   ], ["client"]);
   
   api.export([
