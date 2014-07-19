@@ -82,6 +82,12 @@ AutoForm.addHooks "braintree-payment-form",
 
 
     amount = Session.get "cartTotal"
+
+    # In Braintree, each merchant account can only process for a single currency.
+    # So setting which merchant account to use will also determine
+    # which currency the transaction is processed with.
+    # Check this link for more info:
+    # https://developers.braintreepayments.com/ios+ruby/sdk/server/transaction-processing/create
     
     # Reaction only stores type and 4 digits
     storedCard = getCardType(doc.cardNumber).charAt(0).toUpperCase() + getCardType(doc.cardNumber).slice(1) + " " + doc.cardNumber.slice(-4)
