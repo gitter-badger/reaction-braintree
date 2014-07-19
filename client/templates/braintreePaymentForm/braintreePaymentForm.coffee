@@ -111,7 +111,7 @@ AutoForm.addHooks "braintree-payment-form",
           # This is where we need to decide how much of the Braintree  
           # response object we need to pass to CartWorkflow
           paymentMethod =
-            processor: "Stripe"
+            processor: "Braintree"
             storedCard: storedCard
             method: transaction.payment.payer.payment_method
             transactionId: transaction.payment.id
