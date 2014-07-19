@@ -1,3 +1,14 @@
+getCardType = (number) ->
+  re = new RegExp("^4")
+  return "visa"  if number.match(re)?
+  re = new RegExp("^(34|37)")
+  return "amex"  if number.match(re)?
+  re = new RegExp("^5[1-5]")
+  return "mastercard"  if number.match(re)?
+  re = new RegExp("^6011")
+  return "discover"  if number.match(re)?
+  ""
+
 uiEnd = (template, buttonText) ->
   template.$(":input").removeAttr("disabled")
   template.$("#btn-complete-order").text(buttonText)
@@ -9,6 +20,18 @@ paymentAlert = (errorMessage) ->
 hidePaymentAlert = () ->
   $(".alert").addClass("hidden").text('')
 
+handlePaypalSubmitError = (error) -> #Paypal Error Handling
+  singleError = error?.response?.error_description
+  serverError = error?.response?.message
+  errors = error?.response?.details || []
+  if singleError
+    paymentAlert("Oops! " + singleError)
+  else if errors.length
+    for error in errors
+      formattedError = "Oops! " + error.issue + ": " + error.field.split(/[. ]+/).pop().replace(/_/g,' ')
+      paymentAlert(formattedError)
+  else if serverError
+    paymentAlert("Oops! " + serverError)
 
 Template.braintreetest.helpers
   monthOptions: () ->
