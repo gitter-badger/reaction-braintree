@@ -20,7 +20,7 @@ paymentAlert = (errorMessage) ->
 hidePaymentAlert = () ->
   $(".alert").addClass("hidden").text('')
 
-handlePaypalSubmitError = (error) -> #Paypal Error Handling
+handleBraintreeSubmitError = (error) -> #Paypal Error Handling
   singleError = error?.response?.error_description
   serverError = error?.response?.message
   errors = error?.response?.details || []
@@ -81,17 +81,54 @@ AutoForm.addHooks "braintree-payment-form",
     }
 
 
-    amount = "5.00"
+    amount = Session.get "cartTotal"
     
+    # Reaction only stores type and 4 digits
+    storedCard = getCardType(doc.cardNumber).charAt(0).toUpperCase() + getCardType(doc.cardNumber).slice(1) + " " + doc.cardNumber.slice(-4)
+
     # Order Layout
     $(".list-group a").css("text-decoration", "none")
     $(".list-group-item").removeClass("list-group-item")
     
-    braintreeSubmitCallback = () ->
-      #callback
+    Meteor.call "braintreeSubmit", cardData, amount
+    , (error, transaction) ->
+      submitting = false
+      if error
+        # this only catches connection/authentication errors
+        handleBraintreeSubmitError(error)
+        # Hide processing UI
+        uiEnd(template, "Resubmit payment")
+        return
+      else
+        if transaction.saved is true #successful transaction
 
-    Meteor.call "braintreeSubmit", cardData, amount, braintreeSubmitCallback
+          # This is where we need to decide how much of the Braintree  
+          # response object we need to pass to CartWorkflow
+          paymentMethod =
+            processor: "Stripe"
+            storedCard: storedCard
+            method: transaction.payment.payer.payment_method
+            transactionId: transaction.payment.id
+            amount: transaction.payment.amount
+            status: transaction.payment.state
+            mode: transaction.payment.intent
+            createdAt: new Date(transaction.payment.create_time)
+            updatedAt: new Date(transaction.payment.update_time)
 
+          # Store transaction information with order
+          # paymentMethod will auto transition to
+          # CartWorkflow.paymentAuth() which
+          # will create order, clear the cart, and update inventory,
+          # and goto order confirmation page
+          CartWorkflow.paymentMethod(paymentMethod)
+          return
+        else # card errors are returned in transaction
+          handleBraintreeSubmitError(transaction.error)
+          # Hide processing UI
+          uiEnd(template, "Resubmit payment")
+          return
+
+    return false;
   beginSubmit: (formId, template) ->
     # Show Processing
     template.$(":input").attr("disabled", true)
