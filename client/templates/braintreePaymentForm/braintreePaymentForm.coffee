@@ -71,7 +71,7 @@ AutoForm.addHooks "braintree-payment-form",
     template = this.template
     hidePaymentAlert()
 
-    # Format data for paypal
+    
     cardData = {
       name: doc.payerName
       number: doc.cardNumber
