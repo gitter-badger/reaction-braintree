@@ -16,20 +16,17 @@ Package.on_use(function (api, where) {
     "reaction-core"
   ], ["client", "server"]);
 
-  api.add_files("common/collections.coffee",["client","server"]);
+  api.add_files([
+    "common/collections.coffee",
+    "common/register.coffee"
+    ],["client","server"]);
+
   api.add_files("server/braintree.coffee",["server"]);
   api.add_files([
-    "client/register.coffee",
     "client/routing.coffee",
-
     "client/templates/braintree.html",
     "client/templates/braintree.coffee",
     "client/templates/braintreePaymentForm/braintreePaymentForm.html",
     "client/templates/braintreePaymentForm/braintreePaymentForm.coffee"
-  ], ["client"]);
-  
-  api.export([
-    "BraintreePackageSchema",
-  ], ["client", "server"]);
-  
+  ], ["client"]);  
 });

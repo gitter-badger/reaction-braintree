@@ -1,6 +1,6 @@
 Template.braintree.helpers
   packageData: ->
-    return Packages.findOne({name:"reaction-braintree"})
+    return ReactionCore.Collections.Packages.findOne({name:"reaction-braintree"})
 
 AutoForm.hooks "braintree-update-form":
   onSuccess: (operation, result, template) ->
